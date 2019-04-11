@@ -19,6 +19,8 @@ namespace ColorSwitch
         void Start()
         {
             RandomizeColor();
+            // Set the current color at start.
+            currentColor = rend.color;
         }
 
         // Update is called once per frame
@@ -59,6 +61,18 @@ namespace ColorSwitch
         {
             int index = Random.Range(0, 4);
             rend.color = colors[index];
+            
+            // Because we can get the same color several times in a row: Run RandomizeColor() again and again until we get a brand new color.
+            if (colors[index] == currentColor)
+            {
+                print("Same color!"); // For debugging things. Feel free to use it, or remove it.
+                RandomizeColor();
+            }
+            else
+            {
+                print("New color!");
+                currentColor = colors[index];
+            }
         }
     }
 }
